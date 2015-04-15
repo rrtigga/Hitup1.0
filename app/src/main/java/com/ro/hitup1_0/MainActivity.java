@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +21,24 @@ public class MainActivity extends Activity {
         //setContentView(R.layout.activity_my);
 
 
-
-
         setContentView(R.layout.activity_main);
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-
         EventAdapter ca = new EventAdapter(createList(30));
         recList.setAdapter(ca);
+
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.attachToRecyclerView(recList);
+        //put the button in activity_main.xml
     }
+
+
+
 
 
     @Override
@@ -69,6 +77,9 @@ public class MainActivity extends Activity {
 
         return result;
     }
+
+
+
 
 
 
