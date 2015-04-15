@@ -73,27 +73,5 @@
     </RelativeLayout>
 
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            android:src="@drawable/fab_shadow"
-            fab:fab_colorNormal="#ffd60d1b"
-            fab:fab_colorPressed="#bfd60d1b"
-            fab:fab_colorRipple="#ffff2551"/>
-    </FrameLayout>
-
 
 </android.support.v7.widget.CardView>
