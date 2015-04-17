@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -14,6 +15,10 @@ import java.util.List;
 
 
 public class MainActivity extends Activity {
+
+    List<Event> result = new ArrayList<>();
+
+    EventAdapter ca = new EventAdapter(createList(0));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +32,26 @@ public class MainActivity extends Activity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        EventAdapter ca = new EventAdapter(createList(30));
         recList.setAdapter(ca);
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToRecyclerView(recList);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Event ish = new Event();
+                ish.name = Event.NAME_PREFIX;
+                ish.surname = Event.SURNAME_PREFIX;
+                ish.email = Event.EMAIL_PREFIX + "@test.com";
+
+                ca.addItem(ca.getItemCount(),ish);
+
+
+            }
+        });
         //put the button in activity_main.xml
     }
-
-
-
 
 
     @Override
@@ -64,7 +77,6 @@ public class MainActivity extends Activity {
 
     private List<Event> createList(int size) {
 
-        List<Event> result = new ArrayList<Event>();
         for (int i=1; i <= size; i++) {
             Event ci = new Event();
             ci.name = Event.NAME_PREFIX + i;
@@ -77,9 +89,6 @@ public class MainActivity extends Activity {
 
         return result;
     }
-
-
-
 
 
 
