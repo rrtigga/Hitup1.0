@@ -1,6 +1,7 @@
 package com.ro.hitup1_0;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,13 @@ public class MainActivity extends Activity {
     List<Event> result = new ArrayList<>();
 
     EventAdapter ca = new EventAdapter(createList(0));
+
+
+    public String WhatEvent_String_main;
+    public String WhenEventTime_String_main;
+    public String WhenEventDate_String_main;
+    public String WhereEvent_String_main;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +48,30 @@ public class MainActivity extends Activity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Event ish = new Event();
-                ish.name = Event.NAME_PREFIX;
-                ish.surname = Event.SURNAME_PREFIX;
-                ish.email = Event.EMAIL_PREFIX + "@test.com";
-
-                ca.addItem(ca.getItemCount(),ish);
-
+                Intent intent = new Intent(getApplicationContext(), CreateEvent.class);
+                startActivity(intent);
 
             }
         });
         //put the button in activity_main.xml
+
+
+        Bundle extra = getIntent().getExtras();
+        if(extra!=null){
+            WhatEvent_String_main= extra.getString("WhatEvent_String");
+            WhenEventDate_String_main= extra.getString("WhenEventDate_String");
+            WhenEventTime_String_main= extra.getString("WhenEventTime_String");
+            WhereEvent_String_main= extra.getString("WhereEvent_String");
+
+            Event ish = new Event();
+            ish.name = ("Rohit "+ "wants to "+WhatEvent_String_main+ " at "+ WhereEvent_String_main +" on "+ WhenEventDate_String_main +" at "+ WhenEventTime_String_main);
+
+            //ish.surname = Event.SURNAME_PREFIX;
+            //ish.email = Event.EMAIL_PREFIX + "@test.com";
+
+            ca.addItem(ca.getItemCount(),ish);
+        }
+
     }
 
 
@@ -89,7 +110,5 @@ public class MainActivity extends Activity {
 
         return result;
     }
-
-
 
 }

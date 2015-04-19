@@ -50,7 +50,6 @@ public class CreateEvent extends Activity {
                 WhereEvent_String = WhereEvent_Text.getText().toString();
 
 
-
                 Log.e("What: ", WhatEvent_String);
                 Log.e("When_Time: ", WhenEventTime_String);
                 Log.e("When_Date: ", WhenEventDate_String);

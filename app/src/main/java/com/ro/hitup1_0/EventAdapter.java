@@ -28,7 +28,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
         contactViewHolder.vName.setText(ci.name);
         contactViewHolder.vSurname.setText(ci.surname);
         contactViewHolder.vEmail.setText(ci.email);
-        contactViewHolder.vTitle.setText(ci.name + " " + ci.surname);
+        contactViewHolder.vTitle.setText("Rohit Tigga");
     }
 
     @Override
