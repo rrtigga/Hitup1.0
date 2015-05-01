@@ -1,1 +1,1 @@
-include ':app', ':FloatingActionButton'
+include ':app', ':FloatingActionButton', ':facebook'

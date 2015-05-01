@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
     public String WhenEventDate_String_main;
     public String WhereEvent_String_main;
 
+    public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,10 @@ public class MainActivity extends Activity {
 
 
 
+
+
+
+
     private List<Event> createList(int size) {
 
         for (int i=1; i <= size; i++) {
@@ -110,5 +115,8 @@ public class MainActivity extends Activity {
 
         return result;
     }
+
+
+
 
 }

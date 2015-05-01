@@ -26,8 +26,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
     public void onBindViewHolder(ContactViewHolder contactViewHolder, int i) {
         Event ci = contactList.get(i);
         contactViewHolder.vName.setText(ci.name);
-        contactViewHolder.vSurname.setText(ci.surname);
-        contactViewHolder.vEmail.setText(ci.email);
+        //contactViewHolder.vSurname.setText(ci.surname);
+        //contactViewHolder.vEmail.setText(ci.email);
         contactViewHolder.vTitle.setText("Rohit Tigga");
     }
 
@@ -50,8 +50,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
         public ContactViewHolder(View v) {
             super(v);
             vName =  (TextView) v.findViewById(R.id.txtName);
-            vSurname = (TextView)  v.findViewById(R.id.txtSurname);
-            vEmail = (TextView)  v.findViewById(R.id.txtEmail);
+            //vSurname = (TextView)  v.findViewById(R.id.txtSurname);
+            //vEmail = (TextView)  v.findViewById(R.id.txtEmail);
             vTitle = (TextView) v.findViewById(R.id.title);
         }
     }
