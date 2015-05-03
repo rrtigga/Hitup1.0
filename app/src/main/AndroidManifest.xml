@@ -14,8 +14,9 @@
 
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name=".LoginActivity"
+            android:label="@string/app_name"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,23 +28,23 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_login" >
         </activity>
 
 
-      <!--  <activity android:name="com.facebook.FacebookActivity"
+        <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />-->
+            android:label="@string/app_name" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
 
-        <!--<provider android:authorities="com.facebook.app.FacebookContentProvider1234"
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1234"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true" />-->
+            android:exported="true" />
     </application>
 
 </manifest>

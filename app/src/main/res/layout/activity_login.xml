@@ -40,6 +40,28 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="133dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign in with Google+"
+        android:id="@+id/google_button"
+        android:layout_marginTop="56dp"
+        android:layout_alignTop="@+id/login_button"
+        android:layout_alignLeft="@+id/login_button"
+        android:layout_alignStart="@+id/login_button"
+        android:layout_alignRight="@+id/login_button"
+        android:layout_alignEnd="@+id/login_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign in with email"
+        android:id="@+id/email_button"
+        android:layout_below="@+id/google_button"
+        android:layout_alignLeft="@+id/tagline"
+        android:layout_alignStart="@+id/tagline"
+        android:layout_alignRight="@+id/google_button"
+        android:layout_alignEnd="@+id/google_button" />
 
 
 </RelativeLayout>
