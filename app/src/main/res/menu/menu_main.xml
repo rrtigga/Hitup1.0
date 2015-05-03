@@ -3,7 +3,7 @@
     tools:context=".MainActivity">
 
 
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/action_profile"
         android:icon="@drawable/profile"
         android:title="@string/profile_icon"
         android:showAsAction="ifRoom" />

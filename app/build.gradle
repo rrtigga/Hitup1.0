@@ -29,6 +29,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0'
     compile 'com.android.support:cardview-v7:21.0.0'
     compile project(':FloatingActionButton')
+    compile 'it.neokree:MaterialTabs:0.11'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
 
 }

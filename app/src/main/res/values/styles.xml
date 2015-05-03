@@ -5,4 +5,16 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <!-- Profile application theme. -->
+
+    <style name="ProfileTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+
+
+
 </resources>
