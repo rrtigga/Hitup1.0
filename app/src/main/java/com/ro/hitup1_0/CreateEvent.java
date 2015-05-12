@@ -1,16 +1,16 @@
 package com.ro.hitup1_0;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.Toast;
 
 public class CreateEvent extends Activity {
 
@@ -62,8 +62,15 @@ public class CreateEvent extends Activity {
                 intent.putExtra("WhenEventDate_String", WhenEventDate_String);
                 intent.putExtra("WhereEvent_String", WhereEvent_String);
 
-                startActivity(intent);
+                if((WhatEvent_String.isEmpty()) || (WhenEventTime_String.isEmpty()) ||(WhenEventDate_String.isEmpty())|| (WhereEvent_String.isEmpty())){
+                    Toast toast= Toast.makeText(getApplicationContext(),
+                            "You left one of the fields blank :P", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 375);
+                    toast.show();
+                }
 
+                else
+                    startActivity(intent);
             }
         });
     }

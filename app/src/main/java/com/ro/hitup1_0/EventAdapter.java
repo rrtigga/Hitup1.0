@@ -1,5 +1,6 @@
 package com.ro.hitup1_0;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +11,20 @@ import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewHolder> {
 
+    private  Activity activity;
     private List<Event> contactList;
 
-    public EventAdapter(List<Event> contactList) {
+    public EventAdapter(Activity activity, List<Event> contactList) {
         this.contactList = contactList;
+        this.activity = activity;
+
     }
 
 
     @Override
     public int getItemCount() {
         return contactList.size();
+
     }
 
     @Override
@@ -57,9 +62,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
     }
 
 
-    public void addItem(int position, Event data) {
-        contactList.add(position, data);
-        notifyItemInserted(position);
+    public void addItem( Event data) {
+        contactList.add(data);
+        notifyItemInserted(getItemCount()-1);
     }
 
     public void removeItem(int position) {

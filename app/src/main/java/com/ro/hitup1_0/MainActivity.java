@@ -17,9 +17,9 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    List<Event> result = new ArrayList<>();
+    private static List<Event> result = new ArrayList<>();
 
-    EventAdapter ca = new EventAdapter(createList(0));
+    private static EventAdapter ca;
 
 
     public String WhatEvent_String_main;
@@ -29,18 +29,22 @@ public class MainActivity extends Activity {
 
     public static final String PREFS_NAME = "MyPrefsFile";
 
+    RecyclerView recList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_my);
 
-
         setContentView(R.layout.activity_main);
-        RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
+        recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
+
+        ca = new EventAdapter(this,result);
+
         recList.setAdapter(ca);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -64,13 +68,7 @@ public class MainActivity extends Activity {
             WhenEventTime_String_main= extra.getString("WhenEventTime_String");
             WhereEvent_String_main= extra.getString("WhereEvent_String");
 
-            Event ish = new Event();
-            ish.name = ("Rohit "+ "wants to "+WhatEvent_String_main+ " at "+ WhereEvent_String_main +" on "+ WhenEventDate_String_main +" at "+ WhenEventTime_String_main);
-
-            //ish.surname = Event.SURNAME_PREFIX;
-            //ish.email = Event.EMAIL_PREFIX + "@test.com";
-
-            ca.addItem(ca.getItemCount(),ish);
+            addEvent();
         }
 
     }
@@ -96,22 +94,34 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    protected void addEvent()
+    {
+
+        Event ish = new Event();
+        ish.name = ("Rohit "+ "wants to "+WhatEvent_String_main+ " at "+ WhereEvent_String_main +" on "+ WhenEventDate_String_main +" at "+ WhenEventTime_String_main);
+        //ish.surname = Event.SURNAME_PREFIX;
+        //ish.email = Event.EMAIL_PREFIX + "@test.com";
+        result.add(ish);
+
+        //ca.addItem(ish);
+
+        ca.notifyDataSetChanged();
+
+
+    }
+
     private List<Event> createList(int size) {
 
         for (int i=1; i <= size; i++) {
             Event ci = new Event();
             ci.name = Event.NAME_PREFIX + i;
-            ci.surname = Event.SURNAME_PREFIX + i;
-            ci.email = Event.EMAIL_PREFIX + i + "@test.com";
+            //ci.surname = Event.SURNAME_PREFIX + i;
+            //ci.email = Event.EMAIL_PREFIX + i + "@test.com";
 
             result.add(ci);
-
         }
 
         return result;
     }
-
-
-
 
 }

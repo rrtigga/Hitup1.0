@@ -30,7 +30,8 @@ public class LoginActivity extends FragmentActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-//Get "hasLoggedIn" value. If the value doesn't exist yet false is returned
+
+        //Get "hasLoggedIn" value. If the value doesn't exist yet false is returned
         boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
 
         if(hasLoggedIn)
@@ -66,9 +67,6 @@ public class LoginActivity extends FragmentActivity {
                 finish();
             }
         });
-
-
-
 
     }
 
