@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/fab_shadow"
+        android:src="@drawable/plus"
         fab:fab_colorNormal="#ffd60d1b"
         fab:fab_colorPressed="#bfd60d1b"
         fab:fab_colorRipple="#ffff2551"

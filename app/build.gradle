@@ -31,5 +31,9 @@ dependencies {
     compile project(':FloatingActionButton')
     compile 'it.neokree:MaterialTabs:0.11'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile files('libs/Parse-1.9.1/Parse-1.9.1.jar')
+
+
 
 }

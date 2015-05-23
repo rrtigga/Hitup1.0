@@ -1,1 +1,1 @@
-include ':app', ':FloatingActionButton', ':facebook', ':MaterialTabsModule'
+include ':app', ':FloatingActionButton', ':facebook', ':MaterialTabsModule', ':Parse-1.9.1'

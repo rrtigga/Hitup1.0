@@ -17,7 +17,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:background="@color/bkg_card"
+            android:background="#ffff2f41"
             android:gravity="center_vertical"
             android:textColor="@android:color/white"
             android:textSize="14dp"/>
@@ -29,10 +29,18 @@
             android:text="Name"
             android:gravity="center_vertical"
             android:textSize="15sp"
-            android:layout_marginLeft="47dp"
-            android:layout_marginStart="47dp"
+            android:layout_marginLeft="79dp"
+            android:layout_marginStart="79dp"
 
             android:layout_below="@+id/title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_below="@+id/txtName"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 

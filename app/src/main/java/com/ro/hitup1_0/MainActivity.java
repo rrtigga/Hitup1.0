@@ -9,7 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.melnykov.fab.FloatingActionButton;
+import com.parse.ParseObject;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +28,7 @@ public class MainActivity extends Activity {
     private static EventAdapter ca;
 
 
+
     public String WhatEvent_String_main;
     public String WhenEventTime_String_main;
     public String WhenEventDate_String_main;
@@ -30,6 +37,8 @@ public class MainActivity extends Activity {
     public static final String PREFS_NAME = "MyPrefsFile";
 
     RecyclerView recList;
+
+    AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +79,23 @@ public class MainActivity extends Activity {
 
             addEvent();
         }
+        GraphRequest request = GraphRequest.newMeRequest(
+                accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link");
+        request.setParameters(parameters);
+        request.executeAsync();
+
+
+
 
     }
 
@@ -103,12 +129,18 @@ public class MainActivity extends Activity {
         //ish.email = Event.EMAIL_PREFIX + "@test.com";
         result.add(ish);
 
+        ParseObject event = new ParseObject("Test_Events");
+        event.put("event_description", ish.name);
+
+        event.saveInBackground();
         //ca.addItem(ish);
 
         ca.notifyDataSetChanged();
 
 
     }
+
+
 
     private List<Event> createList(int size) {
 
@@ -123,5 +155,7 @@ public class MainActivity extends Activity {
 
         return result;
     }
+
+
 
 }

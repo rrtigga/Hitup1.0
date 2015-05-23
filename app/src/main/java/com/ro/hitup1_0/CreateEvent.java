@@ -32,6 +32,8 @@ public class CreateEvent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
 
+
+
         CreateEvent_Button = (Button)findViewById(R.id.create_event_button);
 
         WhatEvent_Text   = (EditText)findViewById(R.id.what_event);

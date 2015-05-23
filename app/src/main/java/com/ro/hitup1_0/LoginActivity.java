@@ -11,8 +11,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.widget.LoginButton;
+
+import java.util.Arrays;
 
 
 public class LoginActivity extends FragmentActivity {
@@ -22,12 +29,18 @@ public class LoginActivity extends FragmentActivity {
     LoginButton loginButton;
     Button email_button;
     Button google_button;
+    CallbackManager callbackManager;
+    AccessTokenTracker accessTokenTracker;
+    ProfileTracker profileTracker;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
 
         SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
 
@@ -45,10 +58,41 @@ public class LoginActivity extends FragmentActivity {
             startActivity(intent);
             LoginActivity.this.finish();
         }
+
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         loginButton = (LoginButton) findViewById(R.id.login_button);
         setContentView(R.layout.activity_login);
+
+
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions(Arrays.asList("user_friends","public_profile","email"));
+
+
+
+        // Callback registration
+        //make sure to redirect to main page
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+
+                // App code
+            }
+        };
+
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(
+                    Profile oldProfile,
+                    Profile currentProfile) {
+                // App code
+            }
+
+        };
+
 
         google_button=(Button)findViewById(R.id.google_button);
         google_button.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +135,19 @@ public class LoginActivity extends FragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        profileTracker.stopTracking();
+    }
+
 
 
 
