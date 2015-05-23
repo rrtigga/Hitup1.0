@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 public class MainActivity extends Activity {
 
     private static List<Event> result = new ArrayList<>();
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        ca = new EventAdapter(this,result);
+        ca = new EventAdapter(this,result, getApplicationContext());
 
         recList.setAdapter(ca);
 
@@ -120,8 +122,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void addEvent()
-    {
+    protected void addEvent(){
 
         Event ish = new Event();
         ish.name = ("Rohit "+ "wants to "+WhatEvent_String_main+ " at "+ WhereEvent_String_main +" on "+ WhenEventDate_String_main +" at "+ WhenEventTime_String_main);

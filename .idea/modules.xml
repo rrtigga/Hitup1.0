@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/Parse-1.9.1/Parse-1.9.1.iml" filepath="$PROJECT_DIR$/Parse-1.9.1/Parse-1.9.1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/picasso-2.5.2/picasso-2.5.2.iml" filepath="$PROJECT_DIR$/picasso-2.5.2/picasso-2.5.2.iml" />
     </modules>
   </component>
 </project>

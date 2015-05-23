@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/Parse-1.9.1" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/facebook" />
+            <option value="$PROJECT_DIR$/picasso-2.5.2" />
           </set>
         </option>
       </GradleProjectSettings>
