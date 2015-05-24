@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ public class CreateEvent extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().hide();
         setContentView(R.layout.create_event);
 
 
@@ -37,9 +40,9 @@ public class CreateEvent extends Activity {
         CreateEvent_Button = (Button)findViewById(R.id.create_event_button);
 
         WhatEvent_Text   = (EditText)findViewById(R.id.what_event);
-        WhenEventTime_Text   = (EditText)findViewById(R.id.time_event);
-        WhenEventDate_Text   = (EditText)findViewById(R.id.date_event);
-        WhereEvent_Text   = (EditText)findViewById(R.id.where_event);
+        //WhenEventTime_Text   = (EditText)findViewById(R.id.time_event);
+        //WhenEventDate_Text   = (EditText)findViewById(R.id.date_event);
+        //WhereEvent_Text   = (EditText)findViewById(R.id.where_event);
 
 
         CreateEvent_Button.setOnClickListener(new View.OnClickListener() {
@@ -47,24 +50,24 @@ public class CreateEvent extends Activity {
             public void onClick(View v) {
 
                 WhatEvent_String = WhatEvent_Text.getText().toString();
-                WhenEventTime_String = WhenEventTime_Text.getText().toString();
-                WhenEventDate_String = WhenEventDate_Text.getText().toString();
-                WhereEvent_String = WhereEvent_Text.getText().toString();
+                //WhenEventTime_String = WhenEventTime_Text.getText().toString();
+                //WhenEventDate_String = WhenEventDate_Text.getText().toString();
+                //WhereEvent_String = WhereEvent_Text.getText().toString();
 
 
                 Log.e("What: ", WhatEvent_String);
-                Log.e("When_Time: ", WhenEventTime_String);
+                /*Log.e("When_Time: ", WhenEventTime_String);
                 Log.e("When_Date: ", WhenEventDate_String);
-                Log.e("Where_Event: ", WhereEvent_String);
+                Log.e("Where_Event: ", WhereEvent_String);*/
 
 
                 Intent intent = new Intent(CreateEvent.this,MainActivity.class);
                 intent.putExtra("WhatEvent_String", WhatEvent_String);
-                intent.putExtra("WhenEventTime_String", WhenEventTime_String);
+                /*intent.putExtra("WhenEventTime_String", WhenEventTime_String);
                 intent.putExtra("WhenEventDate_String", WhenEventDate_String);
-                intent.putExtra("WhereEvent_String", WhereEvent_String);
+                intent.putExtra("WhereEvent_String", WhereEvent_String);*/
 
-                if((WhatEvent_String.isEmpty()) || (WhenEventTime_String.isEmpty()) ||(WhenEventDate_String.isEmpty())|| (WhereEvent_String.isEmpty())){
+                if((WhatEvent_String.isEmpty())){
                     Toast toast= Toast.makeText(getApplicationContext(),
                             "You left one of the fields blank :P", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 375);

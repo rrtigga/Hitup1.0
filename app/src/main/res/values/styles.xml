@@ -1,17 +1,19 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Material.Light">
-        <!-- Customize your theme here. -->
-    </style>
+    <!--<style name="AppTheme" parent="android:Theme.Material.Light">
+    </style>-->
 
 
     <!-- Profile application theme. -->
 
-    <style name="ProfileTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
+        <item name="android:typeface">serif</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
 
     </style>
 

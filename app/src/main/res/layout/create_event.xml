@@ -13,48 +13,10 @@
         android:ems="10"
         android:id="@+id/what_event"
         android:hint="What you tryna do?!"
+        android:maxLength="20"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:hint="When dawg?!"
-        android:id="@+id/time_event"
-        android:layout_marginTop="39dp"
-        android:layout_below="@+id/what_event"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/date_event"
-
-    android:layout_toStartOf="@+id/date_event" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="11-11-11"
-        android:id="@+id/date_event"
-        android:layout_alignTop="@+id/time_event"
-        android:layout_alignParentRight="true"
-
-    android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:hint="Rohit's hood"
-        android:id="@+id/where_event"
-        android:layout_below="@+id/time_event"
-        android:layout_alignStart="@+id/what_event"
-        android:layout_alignLeft="@+id/what_event"
-
-        android:layout_marginTop="38dp" />
 
     <Button
         android:layout_width="wrap_content"

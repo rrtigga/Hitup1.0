@@ -40,7 +40,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
         //Picasso.with(context).load("https://scontent-sjc2-1.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/10438582_10202555461926149_8285465463541146116_n.jpg?oh=a8b34b0ed406c9b2853da7ed9603e29c&oe=55FC98BA").into(contactViewHolder.vProfilePic);
         Picasso.with(context)
                 .load("https://scontent-sjc2-1.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/10438582_10202555461926149_8285465463541146116_n.jpg?oh=a8b34b0ed406c9b2853da7ed9603e29c&oe=55FC98BA")
-                .resize(250, 250)
+                .resize(225, 225)
                 .centerCrop()
                 .into(contactViewHolder.vProfilePic);
         //contactViewHolder.vSurname.setText(ci.surname);

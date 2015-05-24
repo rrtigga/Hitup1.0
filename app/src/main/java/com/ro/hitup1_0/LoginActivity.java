@@ -1,7 +1,6 @@
 package com.ro.hitup1_0;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -26,6 +25,7 @@ public class LoginActivity extends FragmentActivity {
 
     //Give your SharedPreferences file a name and save it to a static variable
     public static final String PREFS_NAME = "MyPrefsFile";
+    //Facebook button
     LoginButton loginButton;
     Button email_button;
     Button google_button;
@@ -42,22 +42,9 @@ public class LoginActivity extends FragmentActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
-        SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
 
-        //Get "hasLoggedIn" value. If the value doesn't exist yet false is returned
-        boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
 
-        if(hasLoggedIn)
-        {
-            //Go directly to main activity.
-            // Here we start the next activity, and then call finish()
-            // so that our own will stop running and be removed from the
-            // history stack
-            Intent intent = new Intent();
-            intent.setClass(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            LoginActivity.this.finish();
-        }
+
 
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -67,7 +54,7 @@ public class LoginActivity extends FragmentActivity {
 
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList("user_friends","public_profile","email"));
+        loginButton.setReadPermissions(Arrays.asList("user_friends","user_about_me","email"));
 
 
 
