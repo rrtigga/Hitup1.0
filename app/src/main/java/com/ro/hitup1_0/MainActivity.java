@@ -17,13 +17,9 @@ import android.view.View;
 import android.view.Window;
 
 import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseObject;
-
-import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -50,6 +46,8 @@ public class MainActivity extends Activity {
     RecyclerView recList;
 
     AccessToken accessToken;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +111,7 @@ public class MainActivity extends Activity {
 
             addEvent();
         }
+        /*
         GraphRequest request = GraphRequest.newMeRequest(
                 accessToken,
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -130,15 +129,7 @@ public class MainActivity extends Activity {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,link");
         request.setParameters(parameters);
-        request.executeAsync();
-
-
-
-
-
-
-
-
+        request.executeAsync(); */
 
     }
 
@@ -213,5 +204,7 @@ public class MainActivity extends Activity {
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
     }
+
+
 
 }
