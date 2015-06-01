@@ -1,7 +1,9 @@
 package com.ro.hitup1_0;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -29,7 +31,10 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -47,33 +52,38 @@ public class LoginActivity extends Activity {
     CallbackManager callbackManager;
     AccessTokenTracker accessTokenTracker;
     ProfileTracker profileTracker;
+    JSONArray userInformation;
+
+    String user_id;
+    String name ;
+    String profile;
+    String profile_pic_url;
+
+    SharedPreferences userInfo;
+    SharedPreferences.Editor editor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-
-
-
-
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         loginButton = (LoginButton) findViewById(R.id.login_button);
-
-
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_friends"));
+
+        userInfo = getPreferences(Context.MODE_PRIVATE);
+
+
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-                        Log.e("loginResult: ", loginResult.getAccessToken().toString());
+                        Log.e("loginResult: ", loginResult.getAccessToken().getToken());
                         //LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email", "user_friends"));
 
                         GraphRequest request = GraphRequest.newMeRequest(
@@ -85,17 +95,53 @@ public class LoginActivity extends Activity {
                                             GraphResponse response) {
                                         // Application code
                                         response.getError();
-                                        Log.e("JSON: ",object.toString());
+                                        Log.e("JSON:", object.toString());
 
+                                        try {
+                                            user_id=object.getString("id");
+                                            name=object.getString("name");
+                                            profile=object.getString("link");
+                                            profile_pic_url = object.getString("picture");
+
+                                            JSONObject pic_object1= (JSONObject) new JSONTokener(profile_pic_url).nextValue();
+                                            JSONObject pic_object2 = pic_object1.getJSONObject("data");
+                                            profile_pic_url = (String) pic_object2.get("url");
+
+                                            editor = userInfo.edit();
+                                            editor.putString("id", user_id);
+                                            editor.putString("name", name);
+                                            editor.putString("link", profile);
+                                            editor.putString("profile_pic_url", profile_pic_url);
+
+                                            editor.apply();
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        if(user_id != null ) {
+                                            Log.e("User ID: ", user_id);
+                                        }
+
+                                         if(name != null ) {
+                                            Log.e("name: ", name);
+                                        }
+                                         if(profile != null ) {
+                                            Log.e("profile: ", profile);
+                                        }
+                                        if(profile_pic_url !=null){
+                                            Log.e("profile pic url: ",profile_pic_url);
+                                        }
 
                                     }
                                 });
                         Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,link");
+                        parameters.putString("fields", "id,name,link,picture,friends");
                         request.setParameters(parameters);
-                        Log.e(" About to Graph Call", " ");
                         request.executeAsync();
-                        Log.e(" Finished Graph Call", " ");
+
+                        Intent intent = new Intent(LoginActivity.this, HomeButtons.class);
+                        startActivity(intent);
+                        finish();
 
 
                     }
@@ -141,7 +187,7 @@ public class LoginActivity extends Activity {
         google_button=(Button)findViewById(R.id.google_button);
         google_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomeButtons.class);
                 startActivity(intent);
                 finish();
             }
@@ -150,7 +196,7 @@ public class LoginActivity extends Activity {
         email_button= (Button)findViewById(R.id.email_button);
         email_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomeButtons.class);
                 startActivity(intent);
                 finish();
             }
@@ -208,9 +254,5 @@ public class LoginActivity extends Activity {
         super.onDestroy();
         profileTracker.stopTracking();
     }
-
-
-
-
 
 }

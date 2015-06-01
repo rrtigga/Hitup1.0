@@ -6,6 +6,11 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="facebook_app_id">1559920344265579</string>
     <string name="profile_icon">profile_icon</string>
+    <string name="title_activity_home_buttons">HomeButtons</string>
+
+
+    <string name="HitupFriends">Hitup your Friends</string>
+    <string name="FindHitup">Find a Hitup</string>
 
 
 
