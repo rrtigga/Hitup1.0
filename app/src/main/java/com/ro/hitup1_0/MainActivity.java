@@ -20,6 +20,7 @@ import com.facebook.AccessToken;
 import com.facebook.appevents.AppEventsLogger;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseObject;
+import com.ro.TinyDB.TinyDB;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,6 +47,13 @@ public class MainActivity extends Activity {
     RecyclerView recList;
 
     AccessToken accessToken;
+
+    TinyDB userinfo;
+
+    String user_id;
+    String name ;
+    String profile;
+    String profile_pic_url;
 
 
 
@@ -78,6 +86,7 @@ public class MainActivity extends Activity {
 
             }
         });
+
         //facebook login check
         // Add code to print out the key hash
         try {
@@ -95,7 +104,12 @@ public class MainActivity extends Activity {
 
         }
 
-
+        //retrieve login information strings
+        userinfo = new TinyDB(getApplicationContext());
+        user_id=userinfo.getString("user_id");
+        name=userinfo.getString( "name");
+        profile=userinfo.getString( "profile");
+        profile_pic_url=userinfo.getString( "profile_pic_url");
 
 
 
@@ -111,25 +125,7 @@ public class MainActivity extends Activity {
 
             addEvent();
         }
-        /*
-        GraphRequest request = GraphRequest.newMeRequest(
-                accessToken,
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                        // Application code
-                        response.getError();
-                        //object.toString();
 
-
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link");
-        request.setParameters(parameters);
-        request.executeAsync(); */
 
     }
 
@@ -156,8 +152,14 @@ public class MainActivity extends Activity {
 
     protected void addEvent(){
 
+
+        //retrieve name
+        userinfo = new TinyDB(getApplicationContext());
+        name=userinfo.getString("name");
+
+
         Event ish = new Event();
-        ish.name = ("Rohit "+ "wants to "+WhatEvent_String_main);
+        ish.name = (name+ " wants to "+WhatEvent_String_main);
         //ish.surname = Event.SURNAME_PREFIX;
         //ish.email = Event.EMAIL_PREFIX + "@test.com";
         result.add(ish);

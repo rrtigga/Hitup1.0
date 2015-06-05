@@ -1,9 +1,6 @@
 package com.ro.hitup1_0;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -30,6 +27,7 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.ro.TinyDB.TinyDB;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,8 +57,7 @@ public class LoginActivity extends Activity {
     String profile;
     String profile_pic_url;
 
-    SharedPreferences userInfo;
-    SharedPreferences.Editor editor;
+    TinyDB userinfo;
 
 
     @Override
@@ -75,8 +72,8 @@ public class LoginActivity extends Activity {
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_friends"));
 
-        userInfo = getPreferences(Context.MODE_PRIVATE);
 
+        userinfo = new TinyDB(getApplicationContext());
 
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -97,6 +94,8 @@ public class LoginActivity extends Activity {
                                         response.getError();
                                         Log.e("JSON:", object.toString());
 
+                                        //Find out how to store all user friends efficiently
+
                                         try {
                                             user_id=object.getString("id");
                                             name=object.getString("name");
@@ -107,13 +106,11 @@ public class LoginActivity extends Activity {
                                             JSONObject pic_object2 = pic_object1.getJSONObject("data");
                                             profile_pic_url = (String) pic_object2.get("url");
 
-                                            editor = userInfo.edit();
-                                            editor.putString("id", user_id);
-                                            editor.putString("name", name);
-                                            editor.putString("link", profile);
-                                            editor.putString("profile_pic_url", profile_pic_url);
+                                            userinfo.putString("id", user_id);
+                                            userinfo.putString("name", name);
+                                            userinfo.putString("link", profile);
+                                            userinfo.putString("profile_pic_url", profile_pic_url);
 
-                                            editor.apply();
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
