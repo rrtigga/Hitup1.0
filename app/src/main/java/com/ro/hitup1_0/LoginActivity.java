@@ -1,4 +1,5 @@
 package com.ro.hitup1_0;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -34,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.IOException;
+import java.net.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -112,6 +115,8 @@ public class LoginActivity extends Activity {
                                             userinfo.putString("profile_pic_url", profile_pic_url);
 
 
+
+
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -132,7 +137,8 @@ public class LoginActivity extends Activity {
                                     }
                                 });
                         Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,link,picture,friends");
+                        //parameters.putString("fields", "id,name,link,picture,friends");
+                        parameters.putString("fields", "id,name,link,picture.type(large),friends");
                         request.setParameters(parameters);
                         request.executeAsync();
 
@@ -214,6 +220,18 @@ public class LoginActivity extends Activity {
         } catch (NoSuchAlgorithmException e) {
 
         }
+
+    }
+
+
+    public String geturlRedirect(String first_profileURL) throws IOException{
+        String url = "http://bit.ly/23414";
+        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+        con.setInstanceFollowRedirects(false);
+        con.connect();
+        String realURL = con.getHeaderField(3).toString();
+
+        return realURL;
 
     }
 

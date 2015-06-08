@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import com.facebook.AccessToken;
 import com.facebook.appevents.AppEventsLogger;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseObject;
@@ -38,15 +37,12 @@ public class MainActivity extends Activity {
 
 
     public String WhatEvent_String_main;
-    public String WhenEventTime_String_main;
-    public String WhenEventDate_String_main;
-    public String WhereEvent_String_main;
+
 
     public static final String PREFS_NAME = "MyPrefsFile";
 
     RecyclerView recList;
 
-    AccessToken accessToken;
 
     TinyDB userinfo;
 
@@ -106,9 +102,9 @@ public class MainActivity extends Activity {
 
         //retrieve login information strings
         userinfo = new TinyDB(getApplicationContext());
-        user_id=userinfo.getString("user_id");
+        user_id=userinfo.getString("id");
         name=userinfo.getString( "name");
-        profile=userinfo.getString( "profile");
+        profile=userinfo.getString( "link");
         profile_pic_url=userinfo.getString( "profile_pic_url");
 
 
@@ -119,9 +115,7 @@ public class MainActivity extends Activity {
         Bundle extra = getIntent().getExtras();
         if(extra!=null){
             WhatEvent_String_main= extra.getString("WhatEvent_String");
-            //WhenEventDate_String_main= extra.getString("WhenEventDate_String");
-            //WhenEventTime_String_main= extra.getString("WhenEventTime_String");
-            //WhereEvent_String_main= extra.getString("WhereEvent_String");
+
 
             addEvent();
         }
@@ -151,8 +145,6 @@ public class MainActivity extends Activity {
     }
 
     protected void addEvent(){
-
-
         //retrieve name
         userinfo = new TinyDB(getApplicationContext());
         name=userinfo.getString("name");
@@ -160,36 +152,22 @@ public class MainActivity extends Activity {
 
         Event ish = new Event();
         ish.name = (name+ " wants to "+WhatEvent_String_main);
-        //ish.surname = Event.SURNAME_PREFIX;
-        //ish.email = Event.EMAIL_PREFIX + "@test.com";
+
         result.add(ish);
 
         ParseObject event = new ParseObject("Test_Events");
         event.put("event_description", ish.name);
 
+        //store in local datastore
+        event.pinInBackground();
+        //stores in cloud
         event.saveInBackground();
-        //ca.addItem(ish);
-
         ca.notifyDataSetChanged();
 
 
     }
 
 
-
-    private List<Event> createList(int size) {
-
-        for (int i=1; i <= size; i++) {
-            Event ci = new Event();
-            ci.name = Event.NAME_PREFIX + i;
-            //ci.surname = Event.SURNAME_PREFIX + i;
-            //ci.email = Event.EMAIL_PREFIX + i + "@test.com";
-
-            result.add(ci);
-        }
-
-        return result;
-    }
 
     @Override
     protected void onResume() {
