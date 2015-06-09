@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.facebook.appevents.AppEventsLogger;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.ParseObject;
@@ -25,7 +26,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class MainActivity extends Activity {
@@ -83,6 +83,24 @@ public class MainActivity extends Activity {
             }
         });
 
+        //refresh
+        PullRefreshLayout layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+
+// listen refresh event
+        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                // start refresh
+                Log.e("Refresh: ", "Works");
+
+            }
+        });
+
+// refresh complete
+        layout.setRefreshing(false);
+
+
         //facebook login check
         // Add code to print out the key hash
         try {
@@ -115,8 +133,6 @@ public class MainActivity extends Activity {
         Bundle extra = getIntent().getExtras();
         if(extra!=null){
             WhatEvent_String_main= extra.getString("WhatEvent_String");
-
-
             addEvent();
         }
 

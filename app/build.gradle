@@ -34,6 +34,7 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.+'
     compile files('libs/Parse-1.9.1/Parse-1.9.1.jar')
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile project(':android-PullRefreshLayout')
 
 
 }
