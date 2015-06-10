@@ -137,7 +137,7 @@ public class LoginActivity extends Activity {
                                     }
                                 });
                         Bundle parameters = new Bundle();
-                        //parameters.putString("fields", "id,name,link,picture,friends");
+                        //the picture is large
                         parameters.putString("fields", "id,name,link,picture.type(large),friends");
                         request.setParameters(parameters);
                         request.executeAsync();

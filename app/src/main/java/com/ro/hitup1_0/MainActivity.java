@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_my);
+        //hiding the action bar here
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
         setContentView(R.layout.activity_main);
@@ -160,7 +160,6 @@ public class MainActivity extends Activity {
         result.add(ish);
 
 
-
         ParseObject event = new ParseObject("Test_Events");
         event.put("event", WhatEvent_String_main);
         event.put("Name", name);
@@ -168,7 +167,6 @@ public class MainActivity extends Activity {
         //store in local datastore
         event.pinInBackground();
         //stores in cloud
-
         //notify adapter
         ca.notifyDataSetChanged();
     }
@@ -181,18 +179,25 @@ public class MainActivity extends Activity {
 
 
         //find a way to check if refreshEvents is adding the same object over again
+
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> event, ParseException e) {
                 if (e == null) {
                     // your logic here
-                    for(int i = 0; i<event.size(); i++){
 
-                        Event ish = new Event();
-                        ish.name = (name+ " wants to "+event.get(i).getString("event"));
-                        //Log.e("Yo: ", event.get(i).getString("event"));
-                        result.add(ish);
-                        ca.notifyDataSetChanged();
+                    //maybe you can check add a boolean refresh in parse and check that?
+                    for(int i = 0; i<event.size(); i++){
+                        if(!event.get(i).getBoolean("refreshed")) {
+                            Event ish = new Event();
+
+                            //boolean to add to "refreshed" column in Parse
+                            event.get(i).put("refreshed", true);
+                            ish.name = (name + " wants to " + event.get(i).getString("event"));
+                            //Log.e("Yo: ", event.get(i).getString("event"));
+                            result.add(ish);
+                            ca.notifyDataSetChanged();
+                        }
 
                     }
                 } else {
