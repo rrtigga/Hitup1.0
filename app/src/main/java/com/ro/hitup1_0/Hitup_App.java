@@ -12,9 +12,7 @@ import com.ro.design.TypefaceUtil;
 public class Hitup_App extends Application {
 
 
-    String user_id;
-    String name ;
-    String profilepic_url;
+
     @Override
     public void onCreate() {
         super.onCreate();

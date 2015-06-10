@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +18,10 @@ import android.view.Window;
 import com.baoyz.widget.PullRefreshLayout;
 import com.facebook.appevents.AppEventsLogger;
 import com.melnykov.fab.FloatingActionButton;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.ro.TinyDB.TinyDB;
 
 import java.security.MessageDigest;
@@ -31,21 +33,16 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     private static List<Event> result = new ArrayList<>();
-
     private static EventAdapter ca;
 
 
 
     public String WhatEvent_String_main;
-
-
     public static final String PREFS_NAME = "MyPrefsFile";
 
     RecyclerView recList;
-
-
+    PullRefreshLayout layout;
     TinyDB userinfo;
-
     String user_id;
     String name ;
     String profile;
@@ -59,46 +56,23 @@ public class MainActivity extends Activity {
         //setContentView(R.layout.activity_my);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
-
         setContentView(R.layout.activity_main);
         recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-
         ca = new EventAdapter(this,result, getApplicationContext());
-
         recList.setAdapter(ca);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToRecyclerView(recList);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreateEvent.class);
                 startActivity(intent);
-
             }
         });
-
-        //refresh
-        PullRefreshLayout layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-
-// listen refresh event
-        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                // start refresh
-                Log.e("Refresh: ", "Works");
-
-            }
-        });
-
-// refresh complete
-        layout.setRefreshing(false);
 
 
         //facebook login check
@@ -112,12 +86,11 @@ public class MainActivity extends Activity {
                 md.update(signature.toByteArray());
                 Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
-        } catch (NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
 
         } catch (NoSuchAlgorithmException e) {
 
         }
-
         //retrieve login information strings
         userinfo = new TinyDB(getApplicationContext());
         user_id=userinfo.getString("id");
@@ -125,16 +98,31 @@ public class MainActivity extends Activity {
         profile=userinfo.getString( "link");
         profile_pic_url=userinfo.getString( "profile_pic_url");
 
-
-
         //put the button in activity_main.xml
-
 
         Bundle extra = getIntent().getExtras();
         if(extra!=null){
             WhatEvent_String_main= extra.getString("WhatEvent_String");
             addEvent();
         }
+
+        //refresh
+        layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+
+// listen refresh event
+        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // start refresh
+                Log.e("Refresh: ", "Works");
+                //call refreshEvents
+                refreshEvents();
+                layout.setRefreshing(false);
+            }
+        });
+
+// refresh complete
+        layout.setRefreshing(false);
 
 
     }
@@ -168,18 +156,50 @@ public class MainActivity extends Activity {
 
         Event ish = new Event();
         ish.name = (name+ " wants to "+WhatEvent_String_main);
-
+        //adding to the list
         result.add(ish);
 
-        ParseObject event = new ParseObject("Test_Events");
-        event.put("event_description", ish.name);
 
+
+        ParseObject event = new ParseObject("Test_Events");
+        event.put("event", WhatEvent_String_main);
+        event.put("Name", name);
+        event.saveInBackground();
         //store in local datastore
         event.pinInBackground();
         //stores in cloud
-        event.saveInBackground();
-        ca.notifyDataSetChanged();
 
+        //notify adapter
+        ca.notifyDataSetChanged();
+    }
+
+    protected void refreshEvents(){
+        //retrieve name
+        userinfo = new TinyDB(getApplicationContext());
+        name=userinfo.getString("name");
+
+
+
+        //find a way to check if refreshEvents is adding the same object over again
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> event, ParseException e) {
+                if (e == null) {
+                    // your logic here
+                    for(int i = 0; i<event.size(); i++){
+
+                        Event ish = new Event();
+                        ish.name = (name+ " wants to "+event.get(i).getString("event"));
+                        //Log.e("Yo: ", event.get(i).getString("event"));
+                        result.add(ish);
+                        ca.notifyDataSetChanged();
+
+                    }
+                } else {
+                    // handle Parse Exception here
+                }
+            }
+        });
 
     }
 
@@ -188,7 +208,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
     }
@@ -196,7 +215,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
     }
