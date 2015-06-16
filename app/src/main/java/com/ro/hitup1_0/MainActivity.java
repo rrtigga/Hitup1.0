@@ -152,6 +152,7 @@ public class MainActivity extends Activity {
         //retrieve name
         userinfo = new TinyDB(getApplicationContext());
         name=userinfo.getString("name");
+        user_id=userinfo.getString("id");
 
 
         Event ish = new Event();
@@ -159,10 +160,10 @@ public class MainActivity extends Activity {
         //adding to the list
         result.add(ish);
 
-
         ParseObject event = new ParseObject("Test_Events");
         event.put("event", WhatEvent_String_main);
         event.put("Name", name);
+        event.put("from_userFBid", user_id);
         event.saveInBackground();
         //store in local datastore
         event.pinInBackground();
@@ -178,6 +179,7 @@ public class MainActivity extends Activity {
 
 
 
+
         //find a way to check if refreshEvents is adding the same object over again
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
@@ -187,8 +189,8 @@ public class MainActivity extends Activity {
                     // your logic here
 
                     //maybe you can check add a boolean refresh in parse and check that?
-                    for(int i = 0; i<event.size(); i++){
-                        if(!event.get(i).getBoolean("refreshed")) {
+                    for (int i = 0; i < event.size(); i++) {
+                        if (!event.get(i).getBoolean("refreshed")) {
                             Event ish = new Event();
 
                             //boolean to add to "refreshed" column in Parse
@@ -206,6 +208,14 @@ public class MainActivity extends Activity {
             }
         });
 
+    }
+
+    protected void removeAllEvents(){
+        for(int i = 0; i<result.size();i++){
+            result.remove(i);
+        }
+
+        ca.notifyDataSetChanged();
     }
 
 

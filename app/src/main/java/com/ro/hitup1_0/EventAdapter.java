@@ -22,8 +22,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
     private List<Event> contactList;
     //idk if this should be static
     private static Context context;
-
+    String event;
     String profile_pic_url;
+
 
 
     public EventAdapter(Activity activity, List<Event> contactList, Context context) {
@@ -89,17 +90,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
                     smsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     smsIntent.setType("vnd.android-dir/mms-sms");
                     smsIntent.putExtra("address", "4086079393");
-                    smsIntent.putExtra("sms_body","Body of Message");
+                    smsIntent.putExtra("sms_body","Hey, I saw your Hitup. I'm definitely down!");
                     context.startActivity(smsIntent);
+
 
                 }
             });
 
         }
-
-
-
-
 
     }
 

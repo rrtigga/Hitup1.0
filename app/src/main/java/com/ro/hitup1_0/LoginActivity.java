@@ -28,6 +28,7 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.parse.ParseObject;
 import com.ro.TinyDB.TinyDB;
 
 import org.json.JSONArray;
@@ -35,8 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.IOException;
-import java.net.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -59,6 +58,9 @@ public class LoginActivity extends Activity {
     String name ;
     String profile;
     String profile_pic_url;
+    String friends;
+
+    String[] friend_ids;
 
     TinyDB userinfo;
 
@@ -95,6 +97,7 @@ public class LoginActivity extends Activity {
                                             GraphResponse response) {
                                         // Application code
                                         response.getError();
+                                        //Here's what you got
                                         Log.e("JSON:", object.toString());
 
                                         //Find out how to store all user friends efficiently
@@ -104,15 +107,46 @@ public class LoginActivity extends Activity {
                                             name=object.getString("name");
                                             profile=object.getString("link");
                                             profile_pic_url = object.getString("picture");
+                                            friends = object.getString("friends");
+
 
                                             JSONObject pic_object1= (JSONObject) new JSONTokener(profile_pic_url).nextValue();
                                             JSONObject pic_object2 = pic_object1.getJSONObject("data");
                                             profile_pic_url = (String) pic_object2.get("url");
 
+
+                                            JSONObject jsonObject = new JSONObject(friends);
+                                            JSONArray friends = jsonObject.getJSONArray("data");
+                                            friend_ids = new String[friends.length()];
+
+                                            for (int index=0; index<friends.length(); ++index){
+                                                JSONObject currentFriend = friends.getJSONObject(index);
+                                                String id = currentFriend.getString("id");
+                                                friend_ids[index]=id;
+                                            }
+
+
+
+
                                             userinfo.putString("id", user_id);
                                             userinfo.putString("name", name);
                                             userinfo.putString("link", profile);
                                             userinfo.putString("profile_pic_url", profile_pic_url);
+
+
+                                            //store all user data into Parse table
+                                            ParseObject userData = new ParseObject("UserData");
+                                            userData.put("userID", user_id);
+                                            userData.put("full_name", name);
+                                            userData.put("profilePicURL", profile_pic_url);
+                                            userData.put("allFriendIds", Arrays.asList(friend_ids));
+                                            userData.saveInBackground();
+
+                                            //store in local datastore
+                                            userData.pinInBackground();
+
+
+                                            //figure out how to store all facebook friend IDs into an array
 
 
 
@@ -132,6 +166,10 @@ public class LoginActivity extends Activity {
                                         }
                                         if(profile_pic_url !=null){
                                             Log.e("profile pic url: ",profile_pic_url);
+                                        }
+
+                                        if(friends !=null){
+                                            Log.e("friends: ",friends);
                                         }
 
                                     }
@@ -224,16 +262,7 @@ public class LoginActivity extends Activity {
     }
 
 
-    public String geturlRedirect(String first_profileURL) throws IOException{
-        String url = "http://bit.ly/23414";
-        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
-        con.setInstanceFollowRedirects(false);
-        con.connect();
-        String realURL = con.getHeaderField(3).toString();
 
-        return realURL;
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
