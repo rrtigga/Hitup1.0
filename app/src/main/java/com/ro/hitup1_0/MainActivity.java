@@ -228,13 +228,21 @@ public class MainActivity extends Activity {
 
                     //check friend_id list against from_userFBid OR if from_userFBid ==userid
 
+
+
                     for(int i = 0;i<friend_ids.size(); i++){
                         for(int j =0; j<event.size();j++){
-                            if((friend_ids.get(i)==event.get(j).getString("from_userFBid"))|| event.get(j).get("from_userFBid")==user_id ){
+
+                            Log.e("      "+friend_ids.get(i).toString()+"  :  ", event.get(j).getString("from_userFBid"));
+
+
+                            if((friend_ids.get(i).equals(event.get(j).getString("from_userFBid")))|| event.get(j).getString("from_userFBid").equals(user_id) ){
                                 //add event
 
+                                Log.e("Hitup added success","");
+
                                 Event ish = new Event();
-                                ish.name = (event.get(j).get("Name")+ " wants to "+event.get(j).get("event"));
+                                ish.name = (event.get(j).getString("Name")+ " wants to "+event.get(j).getString("event"));
                                 //adding to the list
                                 result.add(ish);
                                 ca.notifyDataSetChanged();
