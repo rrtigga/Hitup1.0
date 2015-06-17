@@ -29,6 +29,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.ParseObject;
+import com.parse.*;
 import com.ro.TinyDB.TinyDB;
 
 import org.json.JSONArray;
@@ -128,6 +129,9 @@ public class LoginActivity extends Activity {
 
 
 
+
+
+
                                             userinfo.putString("id", user_id);
                                             userinfo.putString("name", name);
                                             userinfo.putString("link", profile);
@@ -135,15 +139,38 @@ public class LoginActivity extends Activity {
 
 
                                             //store all user data into Parse table
-                                            ParseObject userData = new ParseObject("UserData");
+                                            final ParseObject userData = new ParseObject("UserData");
                                             userData.put("userID", user_id);
                                             userData.put("full_name", name);
                                             userData.put("profilePicURL", profile_pic_url);
                                             userData.put("allFriendIds", Arrays.asList(friend_ids));
-                                            userData.saveInBackground();
+
+
+
+
+                                            //saving object id in background
+                                            userData.saveInBackground(new SaveCallback() {
+                                                public void done(ParseException e) {
+                                                    if (e == null) {
+                                                        // Saved successfully.
+                                                        //saving objectid in tinydb
+                                                        Log.d("", "User update saved!");
+                                                        String id = userData.getObjectId();
+                                                        Log.d("", "The object id is: " + id);
+                                                        userinfo.putString("objectId", id);
+
+                                                    } else {
+                                                        // The save failed.
+                                                        Log.d("", "User update error: " + e);
+                                                    }
+                                                }
+                                            });
 
                                             //store in local datastore
                                             userData.pinInBackground();
+
+
+
 
 
                                             //figure out how to store all facebook friend IDs into an array

@@ -19,6 +19,7 @@ import com.baoyz.widget.PullRefreshLayout;
 import com.facebook.appevents.AppEventsLogger;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -36,7 +37,6 @@ public class MainActivity extends Activity {
     private static EventAdapter ca;
 
 
-
     public String WhatEvent_String_main;
     public static final String PREFS_NAME = "MyPrefsFile";
 
@@ -46,9 +46,14 @@ public class MainActivity extends Activity {
     String user_id;
     String name ;
     String profile;
+    String objectId;
     String profile_pic_url;
 
+    long fourhours_milli=14400000;
+    String[] friend_idsArray;
 
+
+    List friend_ids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +129,6 @@ public class MainActivity extends Activity {
 // refresh complete
         layout.setRefreshing(false);
 
-
     }
 
     @Override
@@ -164,6 +168,9 @@ public class MainActivity extends Activity {
         event.put("event", WhatEvent_String_main);
         event.put("Name", name);
         event.put("from_userFBid", user_id);
+        event.put("create_milli", System.currentTimeMillis());
+        event.put("expire_milli", System.currentTimeMillis() + fourhours_milli);
+
         event.saveInBackground();
         //store in local datastore
         event.pinInBackground();
@@ -176,32 +183,69 @@ public class MainActivity extends Activity {
         //retrieve name
         userinfo = new TinyDB(getApplicationContext());
         name=userinfo.getString("name");
+        objectId=userinfo.getString("objectId");
+        user_id=userinfo.getString("id");
+
+
+        friend_ids = new ArrayList<String>();
+
+
+        removeAllEvents();
+
+        ParseQuery<ParseObject> query_user = ParseQuery.getQuery("UserData");
+        query_user.fromLocalDatastore();
+        query_user.getInBackground(objectId, new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    Log.e("allFriendIds: ", object.get("allFriendIds").toString());
+
+                    friend_ids = object.getList("allFriendIds");
+                    for (int i = 0; i < friend_ids.size(); i++) {
+                        Log.e("Friendids" + i + ": ", friend_ids.get(i).toString());
+                    }
+
+                } else {
+                    // something went wrong
+                    Log.e("allFriendIds: ", userinfo.getString("objectId"));
+                }
+            }
+        });
+
+
+        for(int i=0;i<friend_ids.size(); i++){
+            Log.e("Check friend" + i + ": ", friend_ids.get(i).toString());
+        }
 
 
 
-
-        //find a way to check if refreshEvents is adding the same object over again
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
+
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> event, ParseException e) {
                 if (e == null) {
                     // your logic here
 
-                    //maybe you can check add a boolean refresh in parse and check that?
-                    for (int i = 0; i < event.size(); i++) {
-                        if (!event.get(i).getBoolean("refreshed")) {
-                            Event ish = new Event();
+                    //check friend_id list against from_userFBid OR if from_userFBid ==userid
 
-                            //boolean to add to "refreshed" column in Parse
-                            event.get(i).put("refreshed", true);
-                            ish.name = (name + " wants to " + event.get(i).getString("event"));
-                            //Log.e("Yo: ", event.get(i).getString("event"));
-                            result.add(ish);
-                            ca.notifyDataSetChanged();
+                    for(int i = 0;i<friend_ids.size(); i++){
+                        for(int j =0; j<event.size();j++){
+                            if((friend_ids.get(i)==event.get(j).getString("from_userFBid"))|| event.get(j).get("from_userFBid")==user_id ){
+                                //add event
+
+                                Event ish = new Event();
+                                ish.name = (event.get(j).get("Name")+ " wants to "+event.get(j).get("event"));
+                                //adding to the list
+                                result.add(ish);
+                                ca.notifyDataSetChanged();
+
+                            }
+
                         }
-
                     }
+
+
+
                 } else {
                     // handle Parse Exception here
                 }
