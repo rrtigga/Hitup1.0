@@ -126,12 +126,6 @@ public class LoginActivity extends Activity {
                                                 friend_ids[index]=id;
                                             }
 
-
-
-
-
-
-
                                             userinfo.putString("id", user_id);
                                             userinfo.putString("name", name);
                                             userinfo.putString("link", profile);
@@ -170,14 +164,7 @@ public class LoginActivity extends Activity {
                                             //store in local datastore
                                             userData.pinInBackground();
 
-
-
-
-
                                             //figure out how to store all facebook friend IDs into an array
-
-
-
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();

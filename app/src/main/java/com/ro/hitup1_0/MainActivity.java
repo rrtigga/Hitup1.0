@@ -220,39 +220,27 @@ public class MainActivity extends Activity {
 
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
-
-        query.findInBackground(new FindCallback<ParseObject>() {
+        //query.whereContainedIn("from_userFBid", friend_ids);
+        //query.whereNotEqualTo("from_userFBid",user_id);
+        query.addAscendingOrder("event");
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
             public void done(List<ParseObject> event, ParseException e) {
                 if (e == null) {
                     // your logic here
 
+                    //check size here
+                    Log.e("size: ", " "+event.size() );
                     //check friend_id list against from_userFBid OR if from_userFBid ==userid
+                    for(int i = 0; i<event.size(); i++){
 
-
-
-                    for(int i = 0;i<friend_ids.size(); i++){
-                        for(int j =0; j<event.size();j++){
-
-                            Log.e("      "+friend_ids.get(i).toString()+"  :  ", event.get(j).getString("from_userFBid"));
-
-
-                            if((friend_ids.get(i).equals(event.get(j).getString("from_userFBid")))|| event.get(j).getString("from_userFBid").equals(user_id) ){
-                                //add event
-
-                                Log.e("Hitup added success","");
-
-                                Event ish = new Event();
-                                ish.name = (event.get(j).getString("Name")+ " wants to "+event.get(j).getString("event"));
-                                //adding to the list
-                                result.add(ish);
-                                ca.notifyDataSetChanged();
-
-                            }
-
-                        }
+                        Log.e(" ", event.get(i).getString("Name"));
+                        Event ish = new Event();
+                        ish.name = (event.get(i).getString("Name")+ " wants to "+event.get(i).getString("event"));
+                        //adding to the list
+                        result.add(ish);
+                        ca.notifyDataSetChanged();
                     }
-
-
 
                 } else {
                     // handle Parse Exception here
