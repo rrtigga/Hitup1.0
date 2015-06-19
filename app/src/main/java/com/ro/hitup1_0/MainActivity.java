@@ -186,8 +186,11 @@ public class MainActivity extends Activity {
         objectId=userinfo.getString("objectId");
         user_id=userinfo.getString("id");
 
+        friend_ids = new ArrayList<>();
 
-        friend_ids = new ArrayList<String>();
+
+
+
 
 
         removeAllEvents();
@@ -200,9 +203,35 @@ public class MainActivity extends Activity {
                     Log.e("allFriendIds: ", object.get("allFriendIds").toString());
 
                     friend_ids = object.getList("allFriendIds");
-                    for (int i = 0; i < friend_ids.size(); i++) {
-                        Log.e("Friendids" + i + ": ", friend_ids.get(i).toString());
-                    }
+
+                    ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
+                    query.whereContainedIn("from_userFBid", friend_ids);
+                    query.whereNotEqualTo("from_userFBid",user_id);
+                    query.addAscendingOrder("create_milli");
+                    query.findInBackground(new FindCallback<ParseObject>()
+                    {
+                        public void done(List<ParseObject> event, ParseException e) {
+                            if (e == null) {
+                                // your logic here
+
+                                //check size here
+                                Log.e("size: ", " "+event.size() );
+                                //check friend_id list against from_userFBid OR if from_userFBid ==userid
+                                for(int i = 0; i<event.size(); i++){
+
+                                    Log.e(" ", event.get(i).getString("Name"));
+                                    Event ish = new Event();
+                                    ish.name = (event.get(i).getString("Name")+ " wants to "+event.get(i).getString("event"));
+                                    //adding to the list
+                                    result.add(ish);
+                                    ca.notifyDataSetChanged();
+                                }
+
+                            } else {
+                                // handle Parse Exception here
+                            }
+                        }
+                    });
 
                 } else {
                     // something went wrong
@@ -211,17 +240,20 @@ public class MainActivity extends Activity {
             }
         });
 
+        /*
+        if(friend_ids.size() ==0){
+            Log.e(" ", "didn't work size is 0");
+        }
 
         for(int i=0;i<friend_ids.size(); i++){
             Log.e("Check friend" + i + ": ", friend_ids.get(i).toString());
-        }
+        }*/
 
 
-
-
+        /*
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
-        //query.whereContainedIn("from_userFBid", friend_ids);
-        //query.whereNotEqualTo("from_userFBid",user_id);
+        query.whereContainedIn("from_userFBid", friend_ids);
+        query.whereNotEqualTo("from_userFBid", user_id);
         query.addAscendingOrder("event");
         query.findInBackground(new FindCallback<ParseObject>()
         {
@@ -246,7 +278,7 @@ public class MainActivity extends Activity {
                     // handle Parse Exception here
                 }
             }
-        });
+        });*/
 
     }
 
