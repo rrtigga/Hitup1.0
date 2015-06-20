@@ -157,12 +157,18 @@ public class MainActivity extends Activity {
         userinfo = new TinyDB(getApplicationContext());
         name=userinfo.getString("name");
         user_id=userinfo.getString("id");
+        profile_pic_url=userinfo.getString("profile_pic_url");
 
 
         Event ish = new Event();
         ish.name = (name+ " wants to "+WhatEvent_String_main);
         //adding to the list
+        ish.profile_pic_url = profile_pic_url;
+
+        //trying to communicate with adapter from activity...didn't work
+
         result.add(ish);
+
 
         ParseObject event = new ParseObject("Test_Events");
         event.put("event", WhatEvent_String_main);
@@ -170,6 +176,7 @@ public class MainActivity extends Activity {
         event.put("from_userFBid", user_id);
         event.put("create_milli", System.currentTimeMillis());
         event.put("expire_milli", System.currentTimeMillis() + fourhours_milli);
+        event.put("profilePicURL", profile_pic_url);
 
         event.saveInBackground();
         //store in local datastore
@@ -222,6 +229,7 @@ public class MainActivity extends Activity {
                                     Log.e(" ", event.get(i).getString("Name"));
                                     Event ish = new Event();
                                     ish.name = (event.get(i).getString("Name")+ " wants to "+event.get(i).getString("event"));
+                                    ish.profile_pic_url=event.get(i).getString("profilePicURL");
                                     //adding to the list
                                     result.add(ish);
                                     ca.notifyDataSetChanged();
@@ -240,45 +248,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        /*
-        if(friend_ids.size() ==0){
-            Log.e(" ", "didn't work size is 0");
-        }
 
-        for(int i=0;i<friend_ids.size(); i++){
-            Log.e("Check friend" + i + ": ", friend_ids.get(i).toString());
-        }*/
-
-
-        /*
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
-        query.whereContainedIn("from_userFBid", friend_ids);
-        query.whereNotEqualTo("from_userFBid", user_id);
-        query.addAscendingOrder("event");
-        query.findInBackground(new FindCallback<ParseObject>()
-        {
-            public void done(List<ParseObject> event, ParseException e) {
-                if (e == null) {
-                    // your logic here
-
-                    //check size here
-                    Log.e("size: ", " "+event.size() );
-                    //check friend_id list against from_userFBid OR if from_userFBid ==userid
-                    for(int i = 0; i<event.size(); i++){
-
-                        Log.e(" ", event.get(i).getString("Name"));
-                        Event ish = new Event();
-                        ish.name = (event.get(i).getString("Name")+ " wants to "+event.get(i).getString("event"));
-                        //adding to the list
-                        result.add(ish);
-                        ca.notifyDataSetChanged();
-                    }
-
-                } else {
-                    // handle Parse Exception here
-                }
-            }
-        });*/
 
     }
 

@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ro.TinyDB.TinyDB;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,18 +42,17 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
     @Override
     public void onBindViewHolder(ContactViewHolder contactViewHolder, int i) {
         Event ci = contactList.get(i);
+
+
         contactViewHolder.vName.setText(ci.name);
 
-        TinyDB userinfo =new TinyDB(context);
 
-        profile_pic_url = userinfo.getString("profile_pic_url");
-
+        //maybe in .load you have to pass in ci.profile_pic
         Picasso.with(context)
-                .load(profile_pic_url)
+                .load(ci.profile_pic_url)
                 .resize(225, 225)
                 .centerCrop()
                 .into(contactViewHolder.vProfilePic);
-
 
     }
 
