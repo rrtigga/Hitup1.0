@@ -118,9 +118,9 @@ public class LoginActivity extends Activity {
 
                                             JSONObject jsonObject = new JSONObject(friends);
                                             JSONArray friends = jsonObject.getJSONArray("data");
-                                            friend_ids = new String[friends.length()];
+                                            friend_ids = new String[friends.length()+1];
 
-                                            for (int index=0; index<friends.length(); ++index){
+                                            for (int index=0; index<friends.length(); index++){
                                                 JSONObject currentFriend = friends.getJSONObject(index);
                                                 String id = currentFriend.getString("id");
                                                 friend_ids[index]=id;
@@ -137,6 +137,8 @@ public class LoginActivity extends Activity {
                                             userData.put("userID", user_id);
                                             userData.put("full_name", name);
                                             userData.put("profilePicURL", profile_pic_url);
+                                            //adding your OWN friend id
+                                            friend_ids[friend_ids.length-1]=user_id;
                                             userData.put("allFriendIds", Arrays.asList(friend_ids));
 
 

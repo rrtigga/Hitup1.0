@@ -47,6 +47,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
         contactViewHolder.vName.setText(ci.name);
 
 
+
         //maybe in .load you have to pass in ci.profile_pic
         Picasso.with(context)
                 .load(ci.profile_pic_url)

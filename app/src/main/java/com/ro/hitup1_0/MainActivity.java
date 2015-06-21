@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         //hiding the action bar here
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
+        //getActionBar().hide();
         setContentView(R.layout.activity_main);
         recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
@@ -195,11 +195,6 @@ public class MainActivity extends Activity {
 
         friend_ids = new ArrayList<>();
 
-
-
-
-
-
         removeAllEvents();
 
         ParseQuery<ParseObject> query_user = ParseQuery.getQuery("UserData");
@@ -211,25 +206,26 @@ public class MainActivity extends Activity {
 
                     friend_ids = object.getList("allFriendIds");
 
+
                     ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Test_Events");
                     query.whereContainedIn("from_userFBid", friend_ids);
-                    query.whereNotEqualTo("from_userFBid",user_id);
+                    //query.whereNotEqualTo("from_userFBid", user_id);
                     query.addAscendingOrder("create_milli");
-                    query.findInBackground(new FindCallback<ParseObject>()
-                    {
+                    query.whereGreaterThan("expire_milli", System.currentTimeMillis() );
+                    query.findInBackground(new FindCallback<ParseObject>() {
                         public void done(List<ParseObject> event, ParseException e) {
                             if (e == null) {
                                 // your logic here
 
                                 //check size here
-                                Log.e("size: ", " "+event.size() );
+                                Log.e("size: ", " " + event.size());
                                 //check friend_id list against from_userFBid OR if from_userFBid ==userid
-                                for(int i = 0; i<event.size(); i++){
+                                for (int i = 0; i < event.size(); i++) {
 
                                     Log.e(" ", event.get(i).getString("Name"));
                                     Event ish = new Event();
-                                    ish.name = (event.get(i).getString("Name")+ " wants to "+event.get(i).getString("event"));
-                                    ish.profile_pic_url=event.get(i).getString("profilePicURL");
+                                    ish.name = (event.get(i).getString("Name") + " wants to " + event.get(i).getString("event"));
+                                    ish.profile_pic_url = "https://graph.facebook.com/" + event.get(i).getString("from_userFBid") + "/picture?type=large";
                                     //adding to the list
                                     result.add(ish);
                                     ca.notifyDataSetChanged();
