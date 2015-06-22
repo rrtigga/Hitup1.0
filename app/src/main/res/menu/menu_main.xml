@@ -3,7 +3,7 @@
     tools:context=".MainActivity">
 
 
-    <item android:id="@+id/action_profile"
+   <!-- <item android:id="@+id/action_profile"
         android:icon="@drawable/profile"
         android:title="@string/profile_icon"
         android:showAsAction="ifRoom" />
@@ -13,6 +13,6 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:icon="@drawable/settings"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom" />-->
 
 </menu>

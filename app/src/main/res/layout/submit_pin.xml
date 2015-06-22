@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.ro.hitup1_0.SubmitPin">
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColor="#ee5f5f"
+        android:gravity="center"
+        android:text=" To verify you phone number, we have to send you a 6-digit pin code by text message!"
+        android:id="@+id/verify_text"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/submit_pin_text"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/verify_text"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:background="#ffee5f5f"
+        android:textColor="#ffffffff"
+        android:id="@+id/confirm_buttom"
+        android:layout_below="@+id/submit_pin_text"
+        android:layout_marginTop="26dp"
+        android:layout_alignRight="@+id/submit_pin_text"
+        android:layout_alignEnd="@+id/submit_pin_text"
+        android:layout_alignLeft="@+id/submit_pin_text"
+        android:layout_alignStart="@+id/submit_pin_text" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend"
+        android:background="#ffee5f5f"
+        android:textColor="#ffffffff"
+        android:id="@+id/resend_button"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/confirm_buttom"
+        android:layout_alignEnd="@+id/confirm_buttom"
+        android:layout_alignLeft="@+id/confirm_buttom"
+        android:layout_alignStart="@+id/confirm_buttom" />
+
+</RelativeLayout>
+
+
+
+

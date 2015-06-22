@@ -72,13 +72,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
         protected TextView vTitle;
         protected ImageView vProfilePic;
         protected ImageButton vTextMessage;
+        protected ImageButton vFBMessage;
 
         public ContactViewHolder(View v) {
             super(v);
             vName =  (TextView) v.findViewById(R.id.txtName);
             vTextMessage = (ImageButton) v.findViewById(R.id.text_message);
+
             vTitle = (TextView) v.findViewById(R.id.title);
             vProfilePic = (ImageView) v.findViewById(R.id.profile_pic);
+            vFBMessage = (ImageButton) v.findViewById(R.id.facebook_message);
 
 
 
@@ -89,12 +92,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ContactViewH
                     smsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     smsIntent.setType("vnd.android-dir/mms-sms");
                     smsIntent.putExtra("address", "4086079393");
-                    smsIntent.putExtra("sms_body","Hey, I saw your Hitup. I'm definitely down!");
+                    smsIntent.putExtra("sms_body", "Hey, I saw your Hitup. I'm definitely down!");
                     context.startActivity(smsIntent);
+
+
 
 
                 }
             });
+
+
+
+
 
         }
 

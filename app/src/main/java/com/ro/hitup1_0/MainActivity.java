@@ -144,11 +144,11 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_profile) {
+        /*if (id == R.id.action_profile) {
             Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
             startActivity(intent);
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -166,6 +166,8 @@ public class MainActivity extends Activity {
         ish.profile_pic_url = profile_pic_url;
 
         //trying to communicate with adapter from activity...didn't work
+
+        //code for getting user current location
 
         result.add(ish);
 

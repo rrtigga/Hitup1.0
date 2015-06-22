@@ -48,8 +48,12 @@
             android:exported="true" />
 
         <activity
-            android:name=".HomeButtons"
-            android:label="@string/title_activity_home_buttons" >
+            android:name=".EnterNumber"
+            android:label="@string/title_activity_enter_number" >
+        </activity>
+        <activity
+            android:name=".SubmitPin"
+            android:label="@string/title_activity_submit_pin" >
         </activity>
     </application>
 

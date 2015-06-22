@@ -72,8 +72,11 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
+
+        //full screen no action bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_login);
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_friends"));
@@ -197,7 +200,7 @@ public class LoginActivity extends Activity {
                         request.setParameters(parameters);
                         request.executeAsync();
 
-                        Intent intent = new Intent(LoginActivity.this, HomeButtons.class);
+                        Intent intent = new Intent(LoginActivity.this, EnterNumber.class);
                         startActivity(intent);
                         finish();
 
@@ -245,7 +248,7 @@ public class LoginActivity extends Activity {
         google_button=(Button)findViewById(R.id.google_button);
         google_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, HomeButtons.class);
+                Intent intent = new Intent(LoginActivity.this, EnterNumber.class);
                 startActivity(intent);
                 finish();
             }
@@ -254,7 +257,7 @@ public class LoginActivity extends Activity {
         email_button= (Button)findViewById(R.id.email_button);
         email_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, HomeButtons.class);
+                Intent intent = new Intent(LoginActivity.this, EnterNumber.class);
                 startActivity(intent);
                 finish();
             }

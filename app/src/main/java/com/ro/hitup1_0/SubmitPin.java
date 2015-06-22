@@ -6,45 +6,34 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 
 
-public class HomeButtons extends Activity {
+public class SubmitPin extends Activity {
 
-    Button HitupFriends;
-    Button FindHitup;
+    Button confirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        //getActionBar().hide();
-        setContentView(R.layout.activity_home_buttons);
+        setContentView(R.layout.submit_pin);
 
-        HitupFriends=(Button)findViewById(R.id.HitupFriends);
-        HitupFriends.setOnClickListener(new View.OnClickListener() {
+
+        confirm = (Button)findViewById(R.id.confirm_buttom);
+        confirm.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(HomeButtons.this, CreateEvent.class);
+                Intent intent = new Intent(SubmitPin.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        FindHitup= (Button)findViewById(R.id.FindHitup);
-        FindHitup.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeButtons.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home_buttons, menu);
+        getMenuInflater().inflate(R.menu.menu_submit_pin, menu);
         return true;
     }
 

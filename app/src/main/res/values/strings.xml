@@ -11,6 +11,8 @@
 
     <string name="HitupFriends">Hitup your Friends</string>
     <string name="FindHitup">Find a Hitup</string>
+    <string name="title_activity_enter_number">EnterNumber</string>
+    <string name="title_activity_submit_pin">submit_pin</string>
 
 
 

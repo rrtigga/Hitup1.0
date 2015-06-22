@@ -7,7 +7,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#ffff2f41"
+        android:background="#ffee5f5f"
         />
 
     <it.neokree.materialtabs.MaterialTabHost
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@+id/toolbar"
-        app:primaryColor="#ffff2f41"
+        app:primaryColor="#ffee5f5f"
         app:accentColor="#ffc400"
         app:hasIcons="true" />
 

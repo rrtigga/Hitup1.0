@@ -69,7 +69,7 @@ public class CreateEvent extends Activity {
 
                 if((WhatEvent_String.isEmpty())){
                     Toast toast= Toast.makeText(getApplicationContext(),
-                            "You left one of the fields blank :P", Toast.LENGTH_SHORT);
+                            "You left the hitup blank :P", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 375);
                     toast.show();
                 }
