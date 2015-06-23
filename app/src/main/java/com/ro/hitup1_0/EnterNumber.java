@@ -5,27 +5,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+
+import com.digits.sdk.android.AuthCallback;
+import com.digits.sdk.android.DigitsAuthButton;
+import com.digits.sdk.android.DigitsException;
+import com.digits.sdk.android.DigitsSession;
 
 
 public class EnterNumber extends Activity {
-    Button submit;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_number);
 
-        submit = (Button)findViewById(R.id.submit_button);
-        submit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(EnterNumber.this, SubmitPin.class);
+
+        DigitsAuthButton digitsButton = (DigitsAuthButton) findViewById(R.id.submit_button);
+        digitsButton.setCallback(new AuthCallback() {
+            @Override
+            public void success(DigitsSession session, String phoneNumber) {
+                // Do something with the session
+                Intent intent = new Intent(EnterNumber.this, MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+
+            @Override
+            public void failure(DigitsException exception) {
+                // Do something on failure
             }
         });
 

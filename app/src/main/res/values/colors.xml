@@ -2,5 +2,6 @@
 <resources>
 
     <color name="bkg_card">#8C9EFF</color>
+    <color name="red">#FFEE5F5F</color>
 
 </resources>

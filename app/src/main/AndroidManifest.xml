@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+
 
     <application
         android:name=".Hitup_App"
@@ -55,6 +58,9 @@
             android:name=".SubmitPin"
             android:label="@string/title_activity_submit_pin" >
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="7b5ff5947bbfc8d8e652f3482dffd2b55142b17d" />
     </application>
 
 </manifest>
