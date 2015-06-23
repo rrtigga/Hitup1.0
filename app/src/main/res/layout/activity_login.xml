@@ -14,7 +14,7 @@
         android:text="Hitup"
         android:id="@+id/hitup_title"
         android:textSize="70sp"
-        android:textColor="#ffff2f41"
+        android:textColor="#ffee5f5f"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -22,16 +22,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="The best way to make plans on the go with friends!"
-        android:textColor="#ffff2f41"
-
+        android:textColor="#ffee5f5f"
+        android:gravity="center"
         android:id="@+id/tagline"
-        android:textSize="12.5sp"
+        android:textSize="17.55sp"
         android:layout_below="@+id/hitup_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="51dp" />
-
-
-
 
 
     <com.facebook.login.widget.LoginButton

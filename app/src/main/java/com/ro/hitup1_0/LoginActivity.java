@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -28,8 +29,9 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.*;
+import com.parse.SaveCallback;
 import com.ro.TinyDB.TinyDB;
 
 import org.json.JSONArray;
@@ -40,7 +42,6 @@ import org.json.JSONTokener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-
 
 public class LoginActivity extends Activity {
 
@@ -60,9 +61,7 @@ public class LoginActivity extends Activity {
     String profile;
     String profile_pic_url;
     String friends;
-
     String[] friend_ids;
-
     TinyDB userinfo;
 
 
@@ -71,7 +70,19 @@ public class LoginActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+
         callbackManager = CallbackManager.Factory.create();
+
+        //check if facebook user is loggedin http://stackoverflow.com/questions/29294015/how-to-check-if-user-is-logged-in-with-fb-sdk-4-0-for-android
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
+                updateWithToken(newAccessToken);
+            }
+        };
+        updateWithToken(AccessToken.getCurrentAccessToken());
+
 
         //full screen no action bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -281,7 +292,21 @@ public class LoginActivity extends Activity {
 
     }
 
+    private void updateWithToken(AccessToken currentAccessToken) {
 
+        if (currentAccessToken != null) {
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(i);
+
+                    finish();
+                }
+            },0);
+        }
+    }
 
 
     @Override
